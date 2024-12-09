@@ -186,6 +186,11 @@ st.markdown("""
         color: #FFFFFF !important; /* White text */
     }
 
+    /* Add top padding to the body to accommodate the Streamlit header */
+    body {
+        padding-top: 60px !important; /* Adjust the value as needed */
+    }
+
     /* 2. Sidebar Styling */
     [data-testid="stSidebar"] {
         background-color: #000000 !important; /* Black sidebar */
@@ -207,7 +212,7 @@ st.markdown("""
         background-color: #000000 !important; /* Black background */
         color: #FFFFFF !important; /* White text */
         border: 2px solid #FF0000 !important; /* Red border */
-        padding: 20px !important;
+        padding: 60px 20px 20px 20px !important; /* Increased top padding */
         border-radius: 10px !important;
         box-shadow: 0 0 10px #FF0000; /* Red shadow for depth */
     }
@@ -423,7 +428,6 @@ st.sidebar.markdown("**Badges:**")
 for badge in st.session_state.user['badges']:
     st.sidebar.markdown(f"- {badge}")
 
-
 # Helper Functions
 def like_post(post_id):
     for post in st.session_state.posts:
@@ -432,14 +436,12 @@ def like_post(post_id):
             st.session_state.user['points'] += 5  # Reward points for liking
             break
 
-
 def share_post(post_id):
     for post in st.session_state.posts:
         if post['id'] == post_id:
             post['shares'] += 1
             st.session_state.user['points'] += 10  # Reward points for sharing
             break
-
 
 def add_comment(post_id, comment_text):
     if comment_text:
@@ -448,7 +450,6 @@ def add_comment(post_id, comment_text):
                 post['comments'].append({'user': st.session_state.user['name'], 'comment': comment_text})
                 st.session_state.user['points'] += 15  # Reward points for commenting
                 break
-
 
 # Function to display the Home page
 def home():
@@ -488,7 +489,6 @@ def home():
                     st.markdown(f"**Rating:** {source['rating']} ⭐ | **Views:** {source['views']} 👁️")
                     st.markdown(f"[Read Full Article]({source['url']})")
                     st.markdown("---")
-
 
 # Function to display the UGC page
 def ugc():
@@ -576,7 +576,6 @@ def ugc():
 
             st.markdown("---")
 
-
 # Function to display the Communities page
 def communities():
     st.subheader("Communities 🌐")
@@ -616,8 +615,6 @@ def communities():
 
     st.markdown("---")
 
-    # Removed the "List of Sports" section as per instruction
-
     st.markdown("**Community Actions:**")
 
     if not st.session_state.user['joined_communities']:
@@ -640,7 +637,6 @@ def communities():
             st.experimental_rerun()
 
     st.markdown("---")
-
 
 # Function to display the Gamification page
 def gamification():
@@ -671,7 +667,6 @@ def gamification():
     progress = st.progress(min(st.session_state.user['points'], 1000) / 1000)
     st.markdown(f"{st.session_state.user['points']} / 1000 points")
 
-
 # Function to display the Profile page
 def profile():
     st.subheader("Your Profile 👤")
@@ -690,7 +685,6 @@ def profile():
         if update:
             st.session_state.user['name'] = new_name
             st.success("Profile updated successfully!")
-
 
 # Function to display the Polls page
 def polls():
@@ -745,7 +739,6 @@ def polls():
                 st.session_state.user['points'] += 50  # Reward points for creating a poll
                 st.success("Poll created successfully!")
 
-
 # Function to display the Discussions page
 def discussions():
     community = st.session_state.selected_community
@@ -786,7 +779,6 @@ def discussions():
             st.session_state.user['points'] += 30  # Reward points for starting a discussion
             st.success("Discussion started successfully!")
 
-
 # Function to display the Live Streaming page
 def live_streaming():
     community = st.session_state.selected_community
@@ -816,7 +808,6 @@ def live_streaming():
             community_data['live_stream'] = new_stream_url
             st.session_state.user['points'] += 100  # Reward points for updating live stream
             st.success("Live stream updated successfully!")
-
 
 # Render the active page
 if st.session_state.active_page == 'Home':
